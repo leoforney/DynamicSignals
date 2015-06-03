@@ -1,10 +1,12 @@
 package tk.leoforney.dynamicsignals;
 
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -13,9 +15,22 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();
+
+        // Dynamic Signals URL
+        String dsurl = "http://7351ftc.tumblr.com";
+
         WebView myWebView = (WebView) findViewById(R.id.website);
-        myWebView.loadUrl("http://7351ftc.tumblr.com");
+        myWebView.getSettings().setJavaScriptEnabled(true);
+
+        myWebView.loadUrl(dsurl);
+
+        myWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return false;
+            }
+        });
     }
 
     @Override
